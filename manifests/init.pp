@@ -9,7 +9,7 @@ class thrift {
                 "bison",
                 "pkgconfig",
                 "gcc-c++",
-                "openssl-devel",]
+                "openssl-devel"]
   $apt_pkgs = [ "libboost-dev",
                 "libboost-test-dev",
                 "libboost-program-options-dev",
@@ -20,7 +20,7 @@ class thrift {
                 "bison",
                 "pkg-config",
                 "g++",
-                "libssl-dev",]
+                "libssl-dev"]
 
   if $::osfamily == "RedHat" {
     $pkgs = $yum_pkgs
@@ -34,17 +34,17 @@ class thrift {
 
   package { $pkgs:
     ensure => present,
-    before => Instool['thrift-0.9.0'],
+    before => Instool['thrift-0.9.1'],
   }
 
   #package { 'rspec':
   #  ensure   => 'installed',
   #  provider => 'gem',
-  #  before   => Instool['thrift-0.9.0'],
+  #  before   => Instool['thrift-0.9.1'],
   #}
 
-  instool { "thrift-0.9.0":
-    url  => "https://dist.apache.org/repos/dist/release/thrift/0.9.0/thrift-0.9.0.tar.gz",
+  instool { "thrift-0.9.1":
+    url  => "https://dist.apache.org/repos/dist/release/thrift/0.9.1/thrift-0.9.1.tar.gz",
     onlyif => [
       "test ! -x /usr/local/bin/thrift"
     ]
@@ -55,7 +55,7 @@ define instool (
   $thing=$title,
   $dest="/usr/local/lib",
   $onlyif=undef,
-  $url,
+  $url
 ) {
   $tmpdir = "/tmp/${thing}"
   $instdir = "${dest}/${thing}"
