@@ -44,7 +44,7 @@ class thrift {
   #}
 
   instool { "thrift-0.9.0":
-    url  => "https://dist.apache.org/repos/dist/release/thrift/0.9.0/thrift-0.9.0.tar.gz",
+    url  => "http://archive.apache.org/dist/thrift/0.9.0/thrift-0.9.0.tar.gz",
     onlyif => [
       "test ! -x /usr/local/bin/thrift"
     ]
@@ -87,7 +87,7 @@ define instool (
     source  => $tmpdir;
   }
 
-  exec{["./configure", "make", "make install", "make clean"]:
+  exec{["./configure --without-cpp --without-python", "make", "make install", "make clean"]:
     provider => shell,
     cwd      => $instdir,
     onlyif   => $onlyif;
@@ -96,5 +96,5 @@ define instool (
   notify {"install ${name} from ${url} to ${dest}/${name}":}
 
   File[$tmpdir] -> Package[$buildpkgs] -> Exec['download_and_untar'] -> File[$instdir] ->
-  Exec["./configure"] -> Exec['make'] -> Exec['make install'] -> Exec['make clean']
+  Exec["./configure --without-cpp --without-python"] -> Exec['make'] -> Exec['make install'] -> Exec['make clean']
 }
