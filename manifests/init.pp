@@ -58,7 +58,7 @@ class thrift( $version="0.9.1", $executable="/usr/local/bin/thrift" )
 		ensure => present
 	}
 
-	archive { "thrift-$version" :
+	archive { "thrift-${version}" :
 		ensure => present,
 		url => $thrift_url,
 		digest_url => $digest_url,
@@ -71,8 +71,8 @@ class thrift( $version="0.9.1", $executable="/usr/local/bin/thrift" )
 	->
 	exec{ "./configure --without-cpp --without-python --without-php_extension && make && make install && make clean" :
 		provider => shell,
-		cwd      => "$thrift_dir/thrift-${version}",
-		onlyif   => $onlyif,
+		cwd      => "${thrift_dir}/thrift-${version}",
+		onlyif   => "test `find /usr/local/bin/ -name thrift | wc -l` = 0",
 		timeout  => 0,
 		require  => Package[ $pkgs ]
 	}
