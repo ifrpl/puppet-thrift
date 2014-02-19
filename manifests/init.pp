@@ -76,6 +76,4 @@ class thrift( $version="0.9.1", $executable="/usr/local/bin/thrift" )
 		timeout  => 0,
 		require  => Package[ $pkgs ]
 	}
-	->
-	notify { "Thrift compiler installed at $target" : }
 }
